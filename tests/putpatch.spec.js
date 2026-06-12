@@ -34,4 +34,40 @@ const responseText = await putResponse.text();
 console.log(responseText);
 console.log(putResponse.status())
 console.log(response.status())
+
+const createBookingPayload= {
+    "firstname" : "Aditya",
+    "lastname" : "Kunjir",
+    "totalprice" : 111,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2018-01-01",
+        "checkout" : "2019-01-01"
+    },
+    "additionalneeds" : "Breakfast"
+}
+const createBookingResponse= await request.post("https://restful-booker.herokuapp.com/booking",
+{headers:{'Content-Type':'application/json'},data:createBookingPayload})
+
+const responseInJsonBooking= await createBookingResponse.json()
+console.log(responseInJsonBooking)
+const bookingId= responseInJsonBooking.bookingid
+
+console.log(bookingId)
+const updateBookingPayload= {
+    "firstname" : "Adi",
+    "lastname" : "Kunjir",
+    "totalprice" : 111,
+    "depositpaid" : true,
+    "bookingdates" : {
+        "checkin" : "2018-01-01",
+        "checkout" : "2019-01-01"
+    },
+    "additionalneeds" : "dinner"
+}
+
+const updateBookingResponse= await request.put("https://restful-booker.herokuapp.com/booking/"+bookingId,
+    { headers: {"Content-Type": "application/json", "Accept": "application/json", "Cookie": "token=" +authToken }, data:updateBookingPayload})
+ const updateJsonReposne= await  updateBookingResponse.json();
+ console.log(updateJsonReposne)
 })
